@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View, TextInput, StyleSheet } from 'react-nativ
 import React, { useEffect, useState } from 'react';
 import uuid from 'react-native-uuid';
 
-export default function Formulario({ guardarDatos, datos = [], id = null }) { // Ajuste en los props para evitar errores
+export default function Formulario({ guardarDatos, datos = [], id = null }) {
 
   const [gastos, setGastos] = useState({
     nombreGasto: "",
@@ -25,16 +25,18 @@ export default function Formulario({ guardarDatos, datos = [], id = null }) { //
   };
 
   const enviarDatos = () => {
-    if (!gastos.nombreGasto || !gastos.costoGasto || (gastos.costoGasto) <= 0) return;
+    if (!gastos.nombreGasto || !gastos.costoGasto || Number(gastos.costoGasto) <= 0) return;
+  
     if (id === null) {
-      gastos.id=uuid.v4(); // Generar ID único
-      guardarDatos(nuevoGasto);
+      gastos.id = uuid.v4();
+      guardarDatos(gastos);
     } else {
-      guardarDatos({gastos});
+      guardarDatos(gastos);
     }
-
-    setGastos({ nombreGasto: "", costoGasto: "" }); // Limpiar formulario
+  
+    setGastos({ nombreGasto: "", costoGasto: "" }); 
   };
+  
 
   return (
     <View style={styles.contenedor}>
@@ -73,14 +75,14 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 5,
+    borderRadius: 10,
     padding: 10,
     marginBottom: 10,
   },
   boton: {
     backgroundColor: '#007BFF',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     width: '100%',
   },

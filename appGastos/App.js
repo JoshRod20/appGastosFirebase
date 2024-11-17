@@ -23,7 +23,7 @@ export default function App() {
       const querySnapshot = await getDocs(q);
       const d = [];
       querySnapshot.forEach((doc) => {
-        const datosDB = { ...doc.data(), id: doc.id }; // Incluir ID para manejarlo en la lista
+        const datosDB = { ...doc.data(), id: doc.id };
         d.push(datosDB);
       });
       setDatos(d);
@@ -33,17 +33,16 @@ export default function App() {
   };
 
   const guardarNuevoGasto = async (nuevoGasto) => {
-    nuevoGasto.costoGasto = parseInt(nuevoGasto.costoGasto); // Asegurarse de que sea un número entero
+    nuevoGasto.costoGasto = parseInt(nuevoGasto.costoGasto); 
     if (id === null) {
       // Nuevo gasto
-      if (presu - nuevoGasto.costoGasto >= 0) {
+      if ((presu - nuevoGasto.costoGasto) >= 0) {
         await setDoc(doc(db, "Gastos", nuevoGasto.id), nuevoGasto);
-      } else {
-        alert("Saldo insuficiente");
-      }
+      } 
+      else alert("Saldo insuficiente");
     } else {
       // Editar gasto
-      if (presu + costoEdit - nuevoGasto.costoGasto >= 0) {
+      if ((presu + costoEdit - nuevoGasto.costoGasto) >= 0) {
         const datoRef = doc(db, "Gastos", id);
         await updateDoc(datoRef, {
           nombreGasto: nuevoGasto.nombreGasto,
@@ -53,7 +52,7 @@ export default function App() {
         alert("Saldo insuficiente");
       }
     }
-    setId(null); // Limpiar el estado después de guardar/editar
+    setId(null);
   };
   
 
@@ -68,7 +67,7 @@ export default function App() {
 
   const obtenerSuma = () => {
     const totalGasto = datos.reduce((accumulator, item) => {
-      return accumulator + (Number(item.costoGasto) || 0); // Asegurar que el costo sea un número
+      return accumulator + (Number(item.costoGasto) || 0);
     }, 0);
     setPresu(100 - totalGasto);
   };
@@ -88,12 +87,13 @@ export default function App() {
         texto={id === null ? "Guardar Datos" : "Editar Datos"}
       />
       <View style={styles.contenedorLista}>
+      <Text style={styles.list}>Lista Gastos</Text>
         <ListaGastos
           datos={datos}
           eliminarGasto={eliminarGasto}
           cambiarId={cambiarId}
         />
-      <Text>Presupuesto restante: ${presu.toFixed(2)}</Text>
+      <Text style={styles.presu}>Presupuesto restante: ${presu.toFixed(2)}</Text>
       </View>
       <StatusBar style="auto" />
     </View>
@@ -107,15 +107,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
-    marginTop:20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    marginTop:25,
+  },
+  list: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 2,
+    marginTop:25,
+    borderBottomWidth: 1, // Línea de separación
   },
   contenedorLista: {
     flex: 1,
     width: '100%',
+  },
+  presu: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    marginTop:20,
   },
 });
