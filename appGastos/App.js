@@ -112,23 +112,32 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    marginTop:25,
+    marginTop: 25,
   },
   list: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 2,
-    marginTop:25,
-    borderBottomWidth: 1, // Línea de separación
+    marginBottom: 10,
+    marginTop: 10,
+    textAlign: 'center',
   },
   contenedorLista: {
     flex: 1,
     width: '100%',
+    backgroundColor: '#ffffff', // Fondo de la caja
+    borderRadius: 10, // Bordes redondeados
+    padding: 15, // Espaciado interno
+    shadowColor: '#000', // Color de la sombra
+    shadowOpacity: 0.1, // Opacidad de la sombra
+    shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
+    shadowRadius: 5, // Difusión de la sombra
+    elevation: 3, // Altura de la sombra 
+    marginTop: 10,
   },
   presu: {
     fontSize: 15,
     fontWeight: 'bold',
-    marginBottom: 5,
-    marginTop:20,
+    marginTop: 20,
+    textAlign: 'center',
   },
 });
